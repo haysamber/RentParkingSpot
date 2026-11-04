@@ -1,4 +1,4 @@
-t>import Link from "next/link";
+import Link from "next/link";
 import type { Spot } from "@/lib/data";
 
 export default function SpotCard({ id, address, neighborhood, type, pricePerHour, available }: Spot) {
