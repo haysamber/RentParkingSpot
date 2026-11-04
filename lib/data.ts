@@ -6,6 +6,8 @@ export type Spot = {
   pricePerHour: number;
   description: string;
   available: boolean;
+  lat: number;
+  lng: number;
 };
 
 export type Booking = {
@@ -26,6 +28,8 @@ export const spots: Spot[] = [
     pricePerHour: 8,
     description: 'Secure concrete driveway with easy street access.',
     available: true,
+    lat: 37.7529,
+    lng: -122.4183,
   },
   {
     id: '2',
@@ -35,6 +39,8 @@ export const spots: Spot[] = [
     pricePerHour: 15,
     description: 'Private single-car garage steps from Caltrain.',
     available: true,
+    lat: 37.7795,
+    lng: -122.3946,
   },
   {
     id: '3',
@@ -44,6 +50,8 @@ export const spots: Spot[] = [
     pricePerHour: 10,
     description: 'Flat driveway in a quiet residential block.',
     available: true,
+    lat: 37.7601,
+    lng: -122.4352,
   },
   {
     id: '4',
@@ -53,6 +61,8 @@ export const spots: Spot[] = [
     pricePerHour: 18,
     description: 'Covered garage near Chestnut Street shops and restaurants.',
     available: true,
+    lat: 37.7986,
+    lng: -122.4402,
   },
   {
     id: '5',
@@ -62,6 +72,8 @@ export const spots: Spot[] = [
     pricePerHour: 6,
     description: 'Spacious driveway with room for a full-size SUV.',
     available: true,
+    lat: 37.7634,
+    lng: -122.4762,
   },
   {
     id: '6',
@@ -71,6 +83,8 @@ export const spots: Spot[] = [
     pricePerHour: 12,
     description: 'Attached garage on a tree-lined street near Alamo Square.',
     available: true,
+    lat: 37.7751,
+    lng: -122.4374,
   },
 ];
 
