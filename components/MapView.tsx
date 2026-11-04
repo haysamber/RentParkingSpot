@@ -15,6 +15,9 @@ function makePriceIcon(price: number, available: boolean, pricingStatus: string)
     : '#ffffff';
   const color = isNormal ? '#111827' : '#fff';
   const border = isNormal ? 'border:1.5px solid #d1d5db;' : '';
+  const label = pricingStatus === 'sale' ? '<div style="font-size:9px;font-weight:800;letter-spacing:0.08em;opacity:0.9;line-height:1;margin-top:1px;">SALE</div>'
+    : pricingStatus === 'surge' ? '<div style="font-size:9px;font-weight:800;letter-spacing:0.08em;opacity:0.9;line-height:1;margin-top:1px;">SURGE</div>'
+    : '';
   const html = `
     <div style="
       background:${bg};
@@ -23,14 +26,16 @@ function makePriceIcon(price: number, available: boolean, pricingStatus: string)
       font-family:system-ui,sans-serif;
       font-size:13px;
       font-weight:700;
-      padding:4px 8px;
+      padding:4px 8px 3px;
       border-radius:6px;
       white-space:nowrap;
       box-shadow:0 2px 6px rgba(0,0,0,0.35);
       position:relative;
       line-height:1.2;
+      text-align:center;
     ">
       $${price}/hr
+      ${label}
       <div style="
         position:absolute;
         bottom:-6px;
@@ -42,12 +47,13 @@ function makePriceIcon(price: number, available: boolean, pricingStatus: string)
         border-top:6px solid ${bg};
       "></div>
     </div>`;
+  const tall = pricingStatus === 'sale' || pricingStatus === 'surge';
   return L.divIcon({
     html,
     className: '',
-    iconSize: [64, 34],
-    iconAnchor: [32, 40],
-    popupAnchor: [0, -42],
+    iconSize: [64, tall ? 44 : 34],
+    iconAnchor: [32, tall ? 50 : 40],
+    popupAnchor: [0, tall ? -52 : -42],
   });
 }
 
