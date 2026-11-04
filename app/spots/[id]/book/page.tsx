@@ -1,6 +1,6 @@
 import BookForm from "./BookForm";
 
-
+export const dynamic = "force-dynamic";
 
 interface Props {
   params: Promise<{ id: string }>;
