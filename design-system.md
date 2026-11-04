@@ -12,13 +12,15 @@
 
 No secondary font. Inter is used for all text.
 
-## Colors
+## Colors (updated by Dev B)
 
-| Role        | Hex       | Usage                        |
-|-------------|-----------|------------------------------|
-| Primary     | #1A56DB   | CTAs, links, active states   |
-| Secondary   | #F3F4F6   | Card backgrounds, surfaces   |
-| Accent      | #F59E0B   | Badges, highlights           |
-| Background  | #FFFFFF   | Page background              |
-| Text        | #111827   | Primary text                 |
-| Muted Text  | #6B7280   | Secondary labels, captions   |
+| Role        | Hex       | Token          | Usage                        |
+|-------------|-----------|----------------|------------------------------|
+| Primary     | #9a031e   | `primary`      | CTAs, links, active states   |
+| Secondary   | #5f0f40   | `secondary`    | Navbar, card surfaces        |
+| Accent      | #fb8b24   | `accent`       | Badges, highlights           |
+| Accent 2    | #e36414   | `accent2`      | Hover tints                  |
+| Background  | #0f4c5c   | `background`   | Page background              |
+| Surface     | #1a6678   | `surface`      | Card backgrounds             |
+| Text        | #ffffff   | `text-main`    | Primary text (white on dark) |
+| Muted Text  | #c8dfe5   | `text-muted`   | Secondary labels, captions   |

@@ -2,13 +2,15 @@
 @import "leaflet/dist/leaflet.css";
 
 @theme inline {
-  /* Colors */
-  --color-primary: #1A56DB;
-  --color-secondary: #F3F4F6;
-  --color-accent: #F59E0B;
-  --color-background: #FFFFFF;
-  --color-text-main: #111827;
-  --color-text-muted: #6B7280;
+  /* Brand palette */
+  --color-primary: #9a031e;       /* deep-crimson  — CTAs, links, active */
+  --color-secondary: #5f0f40;     /* crimson-violet — navbar, surfaces    */
+  --color-accent: #fb8b24;        /* princeton-orange — badges, highlights */
+  --color-accent2: #e36414;       /* autumn-leaf — hover tints             */
+  --color-background: #0f4c5c;    /* dark-teal — page background           */
+  --color-surface: #1a6678;       /* lightened teal for cards              */
+  --color-text-main: #ffffff;     /* white on dark bg                      */
+  --color-text-muted: #c8dfe5;    /* soft teal-white for secondary text    */
 
   /* Typography */
   --font-sans: var(--font-inter);
@@ -18,4 +20,11 @@ body {
   background-color: var(--color-background);
   color: var(--color-text-main);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Tint OSM map tiles to match dark-teal/crimson brand palette.
+   invert(1) flips to dark base, hue-rotate shifts blue→teal,
+   saturate boosts colour, brightness brings it back up slightly. */
+.map-tiles {
+  filter: invert(1) hue-rotate(155deg) saturate(1.4) brightness(0.85) contrast(0.95);
 }

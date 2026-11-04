@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+const inputCls = "w-full bg-surface border border-primary/40 rounded px-3 py-2 text-text-main placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent mb-4";
+
 export default function BookForm({ id }: { id: string }) {
   const router = useRouter();
   const [date, setDate] = useState('');
@@ -35,63 +37,27 @@ export default function BookForm({ id }: { id: string }) {
   }
 
   return (
-    <main className="max-w-md mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold text-text-main mb-1">Book this spot</h1>
-      <p className="text-text-muted text-sm mb-8">Fill in your details to confirm the reservation.</p>
-      <div className="bg-secondary border border-secondary rounded-2xl p-6">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div>
-            <label className="block text-sm font-medium text-text-main mb-1">Date</label>
-            <input
-              type="date"
-              required
-              value={date}
-              onChange={e => setDate(e.target.value)}
-              className="w-full border border-secondary rounded-lg px-3 py-2.5 text-text-main bg-white focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text-main mb-1">Hours (1–8)</label>
-            <input
-              type="number"
-              min={1}
-              max={8}
-              required
-              value={hours}
-              onChange={e => setHours(e.target.value)}
-              className="w-full border border-secondary rounded-lg px-3 py-2.5 text-text-main bg-white focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text-main mb-1">Your name</label>
-            <input
-              type="text"
-              required
-              value={name}
-              onChange={e => setName(e.target.value)}
-              className="w-full border border-secondary rounded-lg px-3 py-2.5 text-text-main bg-white focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-text-main mb-1">Email</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              className="w-full border border-secondary rounded-lg px-3 py-2.5 text-text-main bg-white focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-2 bg-primary text-white rounded-lg px-6 py-3 font-medium w-full disabled:opacity-60"
-          >
-            {loading ? 'Booking...' : 'Confirm booking'}
-          </button>
-        </form>
-      </div>
+    <main className="max-w-md mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold text-text-main mb-6">Book this spot</h1>
+      <form onSubmit={handleSubmit}>
+        <label className="block text-sm font-medium text-text-muted mb-1">Date</label>
+        <input type="date" required value={date} onChange={e => setDate(e.target.value)} className={inputCls} />
+
+        <label className="block text-sm font-medium text-text-muted mb-1">Hours (1–8)</label>
+        <input type="number" min={1} max={8} required value={hours} onChange={e => setHours(e.target.value)} className={inputCls} />
+
+        <label className="block text-sm font-medium text-text-muted mb-1">Your name</label>
+        <input type="text" required value={name} onChange={e => setName(e.target.value)} className={inputCls} />
+
+        <label className="block text-sm font-medium text-text-muted mb-1">Email</label>
+        <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className={inputCls} />
+
+        <button type="submit" disabled={loading}
+          className="bg-primary text-white rounded px-6 py-2 font-medium w-full hover:bg-accent2 transition-colors disabled:opacity-50">
+          {loading ? 'Booking...' : 'Book spot'}
+        </button>
+        {error && <p className="text-accent mt-2 text-sm">{error}</p>}
+      </form>
     </main>
   );
 }
