@@ -1,7 +1,7 @@
 import { getSpots } from '@/lib/data';
 import SpotCard from '@/components/SpotCard';
 
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   const spots = getSpots();
