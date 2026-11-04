@@ -6,26 +6,46 @@ import Link from 'next/link';
 import type { Spot } from '@/lib/data';
 import L from 'leaflet';
 
-// Custom branded marker icon using Princeton Orange
-const markerSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 41" width="25" height="41">
-  <path d="M12.5 0C5.6 0 0 5.6 0 12.5c0 9.4 12.5 28.5 12.5 28.5S25 21.9 25 12.5C25 5.6 19.4 0 12.5 0z" fill="#fb8b24" stroke="#5f0f40" stroke-width="2"/>
-  <circle cx="12.5" cy="12.5" r="5" fill="#5f0f40"/>
-</svg>`;
+// Price-label DivIcon — shows "$12" on the pin, no click needed
+function makePriceIcon(price: number, available: boolean) {
+  const bg = available ? '#9a031e' : '#6b7280';
+  const html = `
+    <div style="
+      background:${bg};
+      color:#fff;
+      font-family:system-ui,sans-serif;
+      font-size:13px;
+      font-weight:700;
+      padding:4px 8px;
+      border-radius:6px;
+      white-space:nowrap;
+      box-shadow:0 2px 6px rgba(0,0,0,0.35);
+      position:relative;
+      line-height:1.2;
+    ">
+      $${price}/hr
+      <div style="
+        position:absolute;
+        bottom:-6px;
+        left:50%;
+        transform:translateX(-50%);
+        width:0;height:0;
+        border-left:6px solid transparent;
+        border-right:6px solid transparent;
+        border-top:6px solid ${bg};
+      "></div>
+    </div>`;
+  return L.divIcon({
+    html,
+    className: '',
+    iconSize: [64, 34],
+    iconAnchor: [32, 40],
+    popupAnchor: [0, -42],
+  });
+}
 
-const markerUrl = `data:image/svg+xml;base64,${btoa(markerSvg)}`;
-
-const brandedIcon = L.icon({
-  iconUrl: markerUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
-
-// Popup inline styles (Leaflet popups are outside the React tree, Tailwind doesn't reach them)
-const popupStyle: React.CSSProperties = {
-  fontFamily: 'system-ui, sans-serif',
-  minWidth: '190px',
-};
+// Popup inline styles (Leaflet popups are outside React tree, Tailwind doesn't reach them)
+const popupStyle: React.CSSProperties = { fontFamily: 'system-ui, sans-serif', minWidth: '190px' };
 const addressStyle: React.CSSProperties = { fontWeight: 700, color: '#0f4c5c', marginBottom: '6px', fontSize: '14px' };
 const badgeRowStyle: React.CSSProperties = { display: 'flex', gap: '6px', marginBottom: '8px' };
 const badgeAccentStyle: React.CSSProperties = { background: '#fb8b24', color: '#fff', borderRadius: '999px', padding: '2px 8px', fontSize: '11px', fontWeight: 600 };
@@ -41,7 +61,7 @@ interface Props {
 
 export default function MapView({ spots }: Props) {
   useEffect(() => {
-    L.Marker.prototype.options.icon = brandedIcon;
+    // no global icon override needed — each marker uses its own DivIcon
   }, []);
 
   return (
@@ -54,10 +74,13 @@ export default function MapView({ spots }: Props) {
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        className="map-tiles"
       />
       {spots.map((spot) => (
-        <Marker key={spot.id} position={[spot.lat, spot.lng]} icon={brandedIcon}>
+        <Marker
+          key={spot.id}
+          position={[spot.lat, spot.lng]}
+          icon={makePriceIcon(spot.pricePerHour, spot.available)}
+        >
           <Popup>
             <div style={popupStyle}>
               <p style={addressStyle}>{spot.address}</p>
