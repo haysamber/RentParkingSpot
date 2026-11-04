@@ -1,4 +1,4 @@
-export type PricingStatus = 'normal' | 'sale' | 'surge';
+export type PricingStatus = 'normal' | 'sale';
 
 export type Spot = {
   id: string;
@@ -61,8 +61,8 @@ export const spots: Spot[] = [
     address: '340 Brannan St',
     neighborhood: 'SoMa',
     type: 'garage',
-    pricePerHour: 22,
-    pricingStatus: 'surge',
+    pricePerHour: 16,
+    pricingStatus: 'normal',
     description: 'Private single-car garage steps from Caltrain.',
     available: true,
     lat: 37.7795,
@@ -121,6 +121,12 @@ export const spots: Spot[] = [
 export const bookings: Booking[] = [];
 
 export function getSpots(): Spot[] {
+  // Auto-mark the cheapest available spot as 'sale'
+  const available = spots.filter(s => s.available);
+  if (available.length > 0) {
+    const cheapest = available.reduce((a, b) => a.pricePerHour < b.pricePerHour ? a : b);
+    spots.forEach(s => { s.pricingStatus = s.id === cheapest.id ? 'sale' : 'normal'; });
+  }
   return spots;
 }
 

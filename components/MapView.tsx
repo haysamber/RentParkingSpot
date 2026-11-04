@@ -6,17 +6,16 @@ import Link from 'next/link';
 import type { Spot } from '@/lib/data';
 import L from 'leaflet';
 
-// Price-label DivIcon — sale=green, surge=amber, normal=white, booked=grey
+// Price-label DivIcon — sale=green, normal=white, booked=grey
 function makePriceIcon(price: number, available: boolean, pricingStatus: string) {
   const isNormal = available && pricingStatus === 'normal';
   const bg = !available ? '#6b7280'
     : pricingStatus === 'sale' ? '#15803d'
-    : pricingStatus === 'surge' ? '#d97706'
     : '#ffffff';
   const color = isNormal ? '#111827' : '#fff';
   const border = isNormal ? 'border:1.5px solid #d1d5db;' : '';
-  const label = pricingStatus === 'sale' ? '<div style="font-size:9px;font-weight:800;letter-spacing:0.08em;opacity:0.9;line-height:1;margin-top:1px;">SALE</div>'
-    : pricingStatus === 'surge' ? '<div style="font-size:9px;font-weight:800;letter-spacing:0.08em;opacity:0.9;line-height:1;margin-top:1px;">SURGE</div>'
+  const label = pricingStatus === 'sale'
+    ? '<div style="font-size:9px;font-weight:800;letter-spacing:0.08em;opacity:0.9;line-height:1;margin-top:1px;">SALE</div>'
     : '';
   const html = `
     <div style="
@@ -47,7 +46,7 @@ function makePriceIcon(price: number, available: boolean, pricingStatus: string)
         border-top:6px solid ${bg};
       "></div>
     </div>`;
-  const tall = pricingStatus === 'sale' || pricingStatus === 'surge';
+  const tall = pricingStatus === 'sale';
   return L.divIcon({
     html,
     className: '',

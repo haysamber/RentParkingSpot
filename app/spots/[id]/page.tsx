@@ -34,11 +34,6 @@ export default async function SpotDetailPage({ params }: Props) {
             Sale
           </span>
         )}
-        {spot.pricingStatus === 'surge' && (
-          <span className="text-xs font-medium px-3 py-1 rounded-full" style={{ background: '#d97706', color: '#fff' }}>
-            Surge pricing
-          </span>
-        )}
       </div>
 
       <p className="text-text-muted text-base mb-4">{spot.description}</p>
