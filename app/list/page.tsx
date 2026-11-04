@@ -15,7 +15,6 @@ export default function ListPage() {
   const [address, setAddress] = useState('');
   const [neighborhood, setNeighborhood] = useState('Mission');
   const [type, setType] = useState<'driveway' | 'garage'>('driveway');
-  const [pricePerHour, setPricePerHour] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ export default function ListPage() {
       const res = await fetch('/api/spots', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address, neighborhood, type, pricePerHour: Number(pricePerHour), description, available: true }),
+        body: JSON.stringify({ address, neighborhood, type, description }),
       });
       if (!res.ok) throw new Error();
       router.push('/');
@@ -63,10 +62,6 @@ export default function ListPage() {
               <input type="radio" name="type" value="garage" checked={type === 'garage'} onChange={() => setType('garage')} className="accent-accent" /> Garage
             </label>
           </div>
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-text-muted">Price per hour ($)</label>
-          <input type="number" min={1} required value={pricePerHour} onChange={(e) => setPricePerHour(e.target.value)} className={inputCls} />
         </div>
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-text-muted">Description</label>

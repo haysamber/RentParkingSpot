@@ -6,9 +6,12 @@ import Link from 'next/link';
 import type { Spot } from '@/lib/data';
 import L from 'leaflet';
 
-// Price-label DivIcon — shows "$12" on the pin, no click needed
-function makePriceIcon(price: number, available: boolean) {
-  const bg = available ? '#9a031e' : '#6b7280';
+// Price-label DivIcon — four colors: sale=green, surge=amber, normal=crimson, booked=grey
+function makePriceIcon(price: number, available: boolean, pricingStatus: string) {
+  const bg = !available ? '#6b7280'
+    : pricingStatus === 'sale' ? '#15803d'
+    : pricingStatus === 'surge' ? '#d97706'
+    : '#9a031e';
   const html = `
     <div style="
       background:${bg};
@@ -79,7 +82,7 @@ export default function MapView({ spots }: Props) {
         <Marker
           key={spot.id}
           position={[spot.lat, spot.lng]}
-          icon={makePriceIcon(spot.pricePerHour, spot.available)}
+          icon={makePriceIcon(spot.pricePerHour, spot.available, spot.pricingStatus)}
         >
           <Popup>
             <div style={popupStyle}>
@@ -94,7 +97,17 @@ export default function MapView({ spots }: Props) {
               {spot.available ? (
                 <Link href={`/spots/${spot.id}`} style={btnStyle}>View spot →</Link>
               ) : (
-                <span style={bookedStyle}>Already booked</span>
+                <div>
+                  <span style={bookedStyle}>Currently booked</span>
+                  {spot.freeAt && (
+                    <p style={{ fontSize: '11px', color: '#0f4c5c', marginTop: '4px' }}>
+                      Free {new Date(spot.freeAt).toLocaleString('en-US', {
+                        weekday: 'short', month: 'short', day: 'numeric',
+                        hour: 'numeric', minute: '2-digit',
+                      })}
+                    </p>
+                  )}
+                </div>
               )}
             </div>
           </Popup>

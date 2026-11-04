@@ -8,12 +8,13 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
-  const { address, neighborhood, type, pricePerHour, description } = body;
+  const { address, neighborhood, type, description } = body;
 
-  if (!address || !neighborhood || !type || !pricePerHour || !description) {
+  if (!address || !neighborhood || !type || !description) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
   }
 
-  const spot = addSpot({ ...body, available: true });
+  // pricePerHour and pricingStatus are set by AI — not accepted from client
+  const spot = addSpot({ address, neighborhood, type, description, available: true, lat: body.lat ?? 0, lng: body.lng ?? 0 });
   return NextResponse.json(spot, { status: 201 });
 }

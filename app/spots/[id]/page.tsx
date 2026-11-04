@@ -29,13 +29,24 @@ export default async function SpotDetailPage({ params }: Props) {
         <span className="bg-secondary text-text-muted text-xs font-medium px-3 py-1 rounded-full border border-primary/30 capitalize">
           {spot.type}
         </span>
+        {spot.pricingStatus === 'sale' && (
+          <span className="text-xs font-medium px-3 py-1 rounded-full" style={{ background: '#15803d', color: '#fff' }}>
+            Sale
+          </span>
+        )}
+        {spot.pricingStatus === 'surge' && (
+          <span className="text-xs font-medium px-3 py-1 rounded-full" style={{ background: '#d97706', color: '#fff' }}>
+            Surge pricing
+          </span>
+        )}
       </div>
 
       <p className="text-text-muted text-base mb-4">{spot.description}</p>
 
-      <p className="text-text-main text-lg font-semibold mb-8">
+      <p className="text-text-main text-lg font-semibold mb-2">
         ${spot.pricePerHour} <span className="text-text-muted font-normal text-base">/ hr</span>
       </p>
+      <p className="text-text-muted text-xs mb-8">Price set by AI based on neighborhood demand</p>
 
       {spot.available ? (
         <Link
@@ -45,7 +56,18 @@ export default async function SpotDetailPage({ params }: Props) {
           Book this spot
         </Link>
       ) : (
-        <p className="mt-6 text-text-muted">Already booked</p>
+        <div className="mt-2">
+          <p className="text-text-muted text-sm">This spot is currently booked.</p>
+          {spot.freeAt && (
+            <p className="text-text-main text-sm font-medium mt-1">
+              Free from{' '}
+              {new Date(spot.freeAt).toLocaleString('en-US', {
+                weekday: 'short', month: 'short', day: 'numeric',
+                hour: 'numeric', minute: '2-digit',
+              })}
+            </p>
+          )}
+        </div>
       )}
     </main>
   );
