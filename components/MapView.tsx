@@ -6,16 +6,20 @@ import Link from 'next/link';
 import type { Spot } from '@/lib/data';
 import L from 'leaflet';
 
-// Price-label DivIcon — four colors: sale=green, surge=amber, normal=crimson, booked=grey
+// Price-label DivIcon — sale=green, surge=amber, normal=white, booked=grey
 function makePriceIcon(price: number, available: boolean, pricingStatus: string) {
+  const isNormal = available && pricingStatus === 'normal';
   const bg = !available ? '#6b7280'
     : pricingStatus === 'sale' ? '#15803d'
     : pricingStatus === 'surge' ? '#d97706'
-    : '#9a031e';
+    : '#ffffff';
+  const color = isNormal ? '#111827' : '#fff';
+  const border = isNormal ? 'border:1.5px solid #d1d5db;' : '';
   const html = `
     <div style="
       background:${bg};
-      color:#fff;
+      color:${color};
+      ${border}
       font-family:system-ui,sans-serif;
       font-size:13px;
       font-weight:700;
