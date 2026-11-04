@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import type { Spot } from "@/lib/data";
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { getSpot } from '@/lib/data';
 
 export const instant = false;
 
@@ -10,11 +10,9 @@ interface Props {
 
 export default async function SpotDetailPage({ params }: Props) {
   const { id } = await params;
-  const res = await fetch(`http://localhost:3000/api/spots/${id}`, { cache: "no-store" });
+  const spot = getSpot(id);
 
-  if (!res.ok) notFound();
-
-  const spot: Spot = await res.json();
+  if (!spot) notFound();
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-10">
@@ -47,7 +45,7 @@ export default async function SpotDetailPage({ params }: Props) {
           Book this spot
         </Link>
       ) : (
-        <p className="text-text-muted">Already booked</p>
+        <p className="mt-6 text-text-muted">Already booked</p>
       )}
     </main>
   );
