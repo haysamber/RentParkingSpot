@@ -2,19 +2,24 @@ import Link from "next/link";
 
 function ParkSpotLogo() {
   return (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Rounded square with white outline */}
-      <rect x="1" y="1" width="34" height="34" rx="7" fill="#fb8b24" stroke="white" strokeWidth="1.5"/>
-      {/* Bold P */}
+    <svg width="32" height="40" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Meter head — rounded rect */}
+      <rect x="4" y="1" width="24" height="20" rx="5" fill="#fb8b24" stroke="white" strokeWidth="1.5"/>
+      {/* P letter inside meter head */}
       <text
-        x="18"
-        y="26"
+        x="16" y="16"
         textAnchor="middle"
         fontFamily="system-ui, -apple-system, sans-serif"
         fontWeight="800"
-        fontSize="22"
+        fontSize="14"
         fill="white"
       >P</text>
+      {/* Narrow neck below head */}
+      <rect x="13" y="20" width="6" height="4" fill="#fb8b24" stroke="white" strokeWidth="1"/>
+      {/* Pole */}
+      <rect x="14" y="23" width="4" height="14" rx="2" fill="#fb8b24" stroke="white" strokeWidth="1.5"/>
+      {/* Base */}
+      <rect x="8" y="35" width="16" height="4" rx="2" fill="#fb8b24" stroke="white" strokeWidth="1.5"/>
     </svg>
   );
 }
