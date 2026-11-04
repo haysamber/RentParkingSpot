@@ -1,6 +1,6 @@
 import BookForm from "./BookForm";
 
-export const instant = false;
+
 
 interface Props {
   params: Promise<{ id: string }>;

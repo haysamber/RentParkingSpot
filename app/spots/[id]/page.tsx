@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getSpot } from '@/lib/data';
 
-export const instant = false;
+
 
 interface Props {
   params: Promise<{ id: string }>;
